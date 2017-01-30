@@ -282,6 +282,13 @@ class ChromePhp
      */
     protected function _convert($object)
     {
+        // if this is an array apply _convert on all elements
+        if (is_array($object)) {
+            return array_map(function($value) {
+                return $this->_convert($value);
+            }, $object);
+        }
+
         // if this isn't an object then just return it
         if (!is_object($object)) {
             return $object;
